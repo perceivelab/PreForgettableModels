@@ -1,0 +1,12 @@
+[project]
+name = "preforgettablemodels"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "medmnist>=3.0.2",
+    "peft>=0.18.0",
+    "torch>=2.9.1",
+    "transformers>=4.57.2",
+]
