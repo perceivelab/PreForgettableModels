@@ -213,11 +213,14 @@ class PreForgettableModel(nn.Module):
         prompts = self._resolve_prompts(prompt_bank, mode, class_id, labels)
 
         extended_embeddings = embeddings
+        num_prompt_tokens = 0
         if prompts is not None:
+            num_prompt_tokens = prompts.size(1)
             extended_embeddings = torch.cat([prompts, embeddings], dim=1)
 
         outputs = self.backbone.encoder(extended_embeddings)
-        cls_representation = outputs.last_hidden_state[:, 0]
+        # CLS token is at position num_prompt_tokens (after the prompt tokens)
+        cls_representation = outputs.last_hidden_state[:, num_prompt_tokens]
         logits = self.classifier(cls_representation)
         return logits
 
